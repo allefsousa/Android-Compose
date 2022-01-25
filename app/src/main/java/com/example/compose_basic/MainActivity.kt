@@ -3,19 +3,25 @@ package com.example.compose_basic
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose_basic.ui.theme.ComposebasicTheme
@@ -25,48 +31,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                MyScreenContent()
+                PhotographerCard()
             }
-        }
-    }
-}
-
-
-@Composable
-fun Counter(count: Int, updateCount: (Int) -> Unit) {
-    Button(
-        onClick = { updateCount(count + 1) }, colors = ButtonDefaults.buttonColors(
-            backgroundColor = if (count > 5) Color.Green else Color.Red
-        ), modifier = Modifier.fillMaxWidth()
-    ) {
-        Text("I've been clicked $count times")
-    }
-}
-
-@Preview
-@Composable
-fun MyScreenContent(names: List<String> = List(1000) { "Hello Android #$it" }) {
-    val counterState = remember {
-        mutableStateOf(0)
-    }
-    Column(modifier = Modifier.fillMaxHeight()) {
-        NameList(names = names, modifier = Modifier.weight(1f))
-        Divider(color = Color.Transparent, thickness = 32.dp)
-        Counter(
-            count = counterState.value,
-            updateCount = { newCount ->
-                counterState.value = newCount
-            }
-        )
-    }
-}
-
-@Composable
-fun NameList(names: List<String>, modifier: Modifier) {
-    LazyColumn(modifier = modifier) {
-        items(items = names) { name ->
-            Greeting(name = name)
-            Divider(color = Color.Black)
         }
     }
 }
@@ -74,37 +40,35 @@ fun NameList(names: List<String>, modifier: Modifier) {
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
     ComposebasicTheme {
-        Surface(color = Color.Yellow) {
+        Surface {
             content()
         }
     }
 }
 
+@Preview()
 @Composable
-fun MyListContent() {
-    Column {
-        Greeting(name = "Android")
-        Divider(color = Color.Black)
-        Greeting(name = "Compose")
-    }
-}
+fun PhotographerCard() {
+    Row(modifier = Modifier
+        .padding(8.dp)
+        .clip(RoundedCornerShape(4.dp))
+        .background(MaterialTheme.colors.surface)
+        .clickable(onClick = { /* Ignoring onClick */ })
+        .padding(16.dp)) {
+        Surface(
+            modifier = Modifier.size(50.dp),
+            shape = CircleShape,
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
+        ) {}
 
-@Composable
-fun Greeting(name: String) {
-    var isSelected by remember { mutableStateOf(false) }
-    val backgroundColor by animateColorAsState(if (isSelected) Color.Red else Color.Transparent)
-    Text(
-        text = "Hello $name!",
-        modifier = Modifier
-            .padding(4.dp)
-            .background(color = backgroundColor)
-            .clickable(onClick = { isSelected = !isSelected })
-    )
-}
-
-@Composable
-fun DefaultPreview() {
-    ComposebasicTheme {
-        Greeting("Android")
+        Column(modifier = Modifier
+            .padding(start = 8.dp)
+            .align(Alignment.CenterVertically)) {
+            Text("Alfred Sisley", fontWeight = FontWeight.Bold)
+            // LocalContentAlpha is defining opacity level of its children
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
+                Text("3 minutes ago", style = MaterialTheme.typography.body2)
+            }
+        }
     }
 }
