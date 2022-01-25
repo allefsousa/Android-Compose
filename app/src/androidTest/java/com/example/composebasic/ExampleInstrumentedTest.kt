@@ -1,4 +1,4 @@
-package com.example.compose_basic
+package com.example.composebasic
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

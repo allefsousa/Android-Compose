@@ -1,4 +1,4 @@
-package com.example.compose_basic
+package com.example.composebasic
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_basic.ui.theme.ComposebasicTheme
+import com.example.composebasic.ui.theme.ComposebasicTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">compose-basic</string>
+    <string name="title_activity_jetpack_compose_basic">JetpackComposeBasicActivity</string>
 </resources>
